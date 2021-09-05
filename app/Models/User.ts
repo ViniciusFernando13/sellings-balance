@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import Hash from '@ioc:Adonis/Core/Hash';
 import { BaseModel, beforeSave, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm';
 import Supplier from './Supplier';
+import Product from './Product';
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -42,6 +43,27 @@ export default class User extends BaseModel {
     foreignKey: 'user_id',
   })
   public suppliers: HasMany<typeof Supplier>;
+
+  @hasMany(() => Product, {
+    foreignKey: 'user_id',
+    onQuery: (query) => {
+      query.where('active', true);
+    },
+  })
+  public activeProducts: HasMany<typeof Product>;
+
+  @hasMany(() => Product, {
+    foreignKey: 'user_id',
+    onQuery: (query) => {
+      query.where('active', false);
+    },
+  })
+  public inactiveProducts: HasMany<typeof Product>;
+
+  @hasMany(() => Product, {
+    foreignKey: 'user_id',
+  })
+  public products: HasMany<typeof Product>;
 
   @beforeSave()
   public static async hashPassword(user: User) {
