@@ -3,6 +3,7 @@ import Hash from '@ioc:Adonis/Core/Hash';
 import { BaseModel, beforeSave, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm';
 import Supplier from './Supplier';
 import Product from './Product';
+import Sale from './Sale';
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -24,7 +25,7 @@ export default class User extends BaseModel {
   public updatedAt: DateTime;
 
   @hasMany(() => Supplier, {
-    foreignKey: 'user_id',
+    foreignKey: 'userId',
     onQuery: (query) => {
       query.where('active', true);
     },
@@ -32,7 +33,7 @@ export default class User extends BaseModel {
   public activeSuppliers: HasMany<typeof Supplier>;
 
   @hasMany(() => Supplier, {
-    foreignKey: 'user_id',
+    foreignKey: 'userId',
     onQuery: (query) => {
       query.where('active', false);
     },
@@ -40,12 +41,12 @@ export default class User extends BaseModel {
   public inactiveSuppliers: HasMany<typeof Supplier>;
 
   @hasMany(() => Supplier, {
-    foreignKey: 'user_id',
+    foreignKey: 'userId',
   })
   public suppliers: HasMany<typeof Supplier>;
 
   @hasMany(() => Product, {
-    foreignKey: 'user_id',
+    foreignKey: 'userId',
     onQuery: (query) => {
       query.where('active', true);
     },
@@ -53,7 +54,7 @@ export default class User extends BaseModel {
   public activeProducts: HasMany<typeof Product>;
 
   @hasMany(() => Product, {
-    foreignKey: 'user_id',
+    foreignKey: 'userId',
     onQuery: (query) => {
       query.where('active', false);
     },
@@ -61,9 +62,14 @@ export default class User extends BaseModel {
   public inactiveProducts: HasMany<typeof Product>;
 
   @hasMany(() => Product, {
-    foreignKey: 'user_id',
+    foreignKey: 'userId',
   })
   public products: HasMany<typeof Product>;
+
+  @hasMany(() => Sale, {
+    foreignKey: 'userId',
+  })
+  public sales: HasMany<typeof Sale>;
 
   @beforeSave()
   public static async hashPassword(user: User) {

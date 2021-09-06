@@ -12,7 +12,7 @@ export default class Products {
     try {
       // schema para validação do request
       const createSchema = schema.create({
-        supplier_id: schema.number([rules.exists({ table: 'suppliers', column: 'id', where: { user_id: user.id } })]),
+        supplierId: schema.number([rules.exists({ table: 'suppliers', column: 'id', where: { user_id: user.id } })]),
         name: schema.string({ trim: true }, [rules.minLength(3)]),
         price: schema.number(),
         inventory: schema.number(),
@@ -50,7 +50,7 @@ export default class Products {
 
       // schema para validação do request
       const updateSchema = schema.create({
-        supplier_id: schema.number.optional([
+        supplierId: schema.number.optional([
           rules.exists({ table: 'suppliers', column: 'id', where: { user_id: user.id } }),
         ]),
         name: schema.string.optional({ trim: true }, [rules.minLength(3)]),

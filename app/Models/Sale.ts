@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon';
-import { BaseModel, belongsTo, BelongsTo, column } from '@ioc:Adonis/Lucid/Orm';
+import { BaseModel, BelongsTo, belongsTo, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm';
 import User from './User';
+import SaleItem from './SaleItem';
 
-export default class Supplier extends BaseModel {
+export default class Sale extends BaseModel {
   @column({ isPrimary: true })
   public id: number;
 
@@ -10,13 +11,10 @@ export default class Supplier extends BaseModel {
   public userId: number;
 
   @column()
-  public name: string;
+  public clientName: string;
 
-  @column()
-  public commission: number;
-
-  @column()
-  public active: boolean;
+  @column.date()
+  public date: DateTime;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
@@ -28,4 +26,9 @@ export default class Supplier extends BaseModel {
     foreignKey: 'userId',
   })
   public user: BelongsTo<typeof User>;
+
+  @hasMany(() => SaleItem, {
+    foreignKey: 'saleId',
+  })
+  public saleItems: HasMany<typeof SaleItem>;
 }

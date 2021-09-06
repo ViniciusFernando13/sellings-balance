@@ -12,10 +12,7 @@ export default class Auth {
       // schema para validação do request
       const signUpSchema = schema.create({
         name: schema.string({ trim: true }, [rules.minLength(3)]),
-        email: schema.string({}, [
-          rules.email(),
-          rules.unique({ table: 'users', column: 'email' }),
-        ]),
+        email: schema.string({}, [rules.email(), rules.unique({ table: 'users', column: 'email' })]),
         password: schema.string({ escape: true }, [rules.minLength(8), rules.confirmed()]),
       });
 

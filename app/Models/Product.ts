@@ -8,10 +8,10 @@ export default class Product extends BaseModel {
   public id: number;
 
   @column()
-  public supplier_id: number;
+  public supplierId: number;
 
   @column()
-  public user_id: number;
+  public userId: number;
 
   @column()
   public name: string;
@@ -32,12 +32,12 @@ export default class Product extends BaseModel {
   public updatedAt: DateTime;
 
   @belongsTo(() => Supplier, {
-    foreignKey: 'supplier_id',
+    foreignKey: 'supplierId',
   })
   public supplier: BelongsTo<typeof Supplier>;
 
   @belongsTo(() => User, {
-    foreignKey: 'user_id',
+    foreignKey: 'userId',
   })
   public user: BelongsTo<typeof User>;
 }

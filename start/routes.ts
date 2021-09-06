@@ -37,3 +37,22 @@ Route.group(() => {
 })
   .prefix('suppliers')
   .middleware('auth');
+
+Route.group(() => {
+  Route.post('', 'ProductsController.create');
+  Route.put(':id', 'ProductsController.update');
+  Route.delete(':id', 'ProductsController.delete');
+  Route.put(':id/active', 'ProductsController.active');
+  Route.get('', 'ProductsController.findAll');
+  Route.get('all', 'ProductsController.findAllWithInactive');
+  Route.get('inactive', 'ProductsController.findAllInactive');
+  Route.get(':id', 'ProductsController.find');
+})
+  .prefix('products')
+  .middleware('auth');
+
+Route.group(() => {
+  Route.post('', 'SalesController.create');
+})
+  .prefix('sales')
+  .middleware('auth');
